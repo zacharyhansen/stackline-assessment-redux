@@ -1,3 +1,8 @@
-.App-header {
-  min-height: 100vh;
+#root {
+  background-color: #f6f8fa;
+}
+
+.component-box {
+  background-color: white;
+  margin: 2rem;
 }

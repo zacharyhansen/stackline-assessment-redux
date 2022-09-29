@@ -1,71 +1,49 @@
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
-import logo from "./logo.svg";
+import SvgIcon from "@mui/material/SvgIcon";
+import { ReactComponent as Logo } from "./logo.svg";
+import { useEffect } from "react";
+import { useAppDispatch } from "./app/hooks";
+import { loadSalesAsync } from "./slices/sales";
+import Graph from "./components/graph";
+import DataTable from "./components/dataTable";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import ItemCard from "./components/ItemCard";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadSalesAsync());
+  }, [dispatch]);
+
   return (
-    <header className="App-header">
+    <div>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Newss
-          </Typography>
-          <SvgIcon>{logo}</SvgIcon>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Newss
-          </Typography>
+          <SvgIcon sx={{ fontSize: "80px" }}>
+            <Logo />
+          </SvgIcon>
         </Toolbar>
       </AppBar>
-      <Counter />
-      <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <span>
-        <span>Learn </span>
-        <a
-          className="App-link"
-          href="https://reactjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          React
-        </a>
-        <span>, </span>
-        <a
-          className="App-link"
-          href="https://redux.js.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Redux
-        </a>
-        <span>, </span>
-        <a
-          className="App-link"
-          href="https://redux-toolkit.js.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Redux Toolkit
-        </a>
-        ,<span> and </span>
-        <a
-          className="App-link"
-          href="https://react-redux.js.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          React Redux
-        </a>
-      </span>
-    </header>
+      <Grid container spacing={1}>
+        <Grid item xs={3}>
+          <Box className="component-box">
+            <ItemCard />
+          </Box>
+        </Grid>
+        <Grid item xs={9}>
+          <Box className="component-box">
+            <Graph />
+          </Box>
+          <Box className="component-box">
+            <DataTable />
+          </Box>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 
